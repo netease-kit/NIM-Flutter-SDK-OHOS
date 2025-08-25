@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/entry/entry.iml" filepath="$PROJECT_DIR$/.idea/modules/entry/entry.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ohos.iml" filepath="$PROJECT_DIR$/.idea/modules/ohos.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ohos.entry/ohos.entry.iml" filepath="$PROJECT_DIR$/.idea/modules/ohos.entry/ohos.entry.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ohos.nim_core_v2/ohos.nim_core_v2.iml" filepath="$PROJECT_DIR$/.idea/modules/ohos.nim_core_v2/ohos.nim_core_v2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ohos.path_provider/ohos.path_provider.iml" filepath="$PROJECT_DIR$/.idea/modules/ohos.path_provider/ohos.path_provider.iml" />
+    </modules>
+  </component>
+</project>
