@@ -14,16 +14,16 @@ dependencies:
     sdk: flutter
   nim_core_v2_platform_interface:
 #    '>=10.9.1 <10.10.0'
-    path: ../nim_core_v2_platform_interface
+    path: platform/nim_core_v2_platform_interface
   nim_core_v2_windows:
 #    '>=10.9.1 <10.10.0'
-    path: ../nim_core_v2_windows
+    path: platform/nim_core_v2_windows
   nim_core_v2_macos:
 #    '>=10.9.1 <10.10.0'
-    path: ../nim_core_v2_macos
+    path: platform/nim_core_v2_macos
   nim_core_v2_web:
 #    '>=10.4.0 <10.10.0'
-     path: ../nim_core_v2_web
+     path: platform/nim_core_v2_web
   path_provider: ^2.0.2
   # yunxin_base: ^0.1.0-rc.0
   universal_io: ^2.0.4
