@@ -87,6 +87,7 @@ export 'package:nim_core_v2_platform_interface/src/platform_interface/chatroom/c
 export 'package:nim_core_v2_platform_interface/src/platform_interface/chatroom/chatroom_member.dart';
 export 'package:nim_core_v2_platform_interface/src/platform_interface/chatroom/chatroom_message.dart';
 export 'package:nim_core_v2_platform_interface/src/platform_interface/chatroom/chatroom_queue.dart';
+export 'package:yunxin_alog/yunxin_alog.dart';
 
 part 'src/login/login_service.dart';
 part 'src/message/message_service.dart';
