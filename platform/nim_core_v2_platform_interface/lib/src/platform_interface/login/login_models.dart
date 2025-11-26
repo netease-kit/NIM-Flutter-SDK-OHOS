@@ -18,6 +18,9 @@ class NIMLoginOption {
   /// 强制登录模式
   bool? forceMode;
 
+  /// 离线登录模式
+  bool? offlineMode;
+
   /// 认证类型
   NIMLoginAuthType? authType;
 
@@ -35,6 +38,7 @@ class NIMLoginOption {
       this.timeout,
       this.authType,
       this.forceMode,
+      this.offlineMode,
       this.syncLevel,
       this.extensionProvider = false,
       this.tokenProvider = false});

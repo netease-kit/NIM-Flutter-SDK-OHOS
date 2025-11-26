@@ -293,7 +293,9 @@ void FLTMessageService::onMethodCalled(
     case "modifyMessage"_hash:
       modifyMessage(arguments, result);
       return;
-
+    case "clearRoamingMessage"_hash:
+      clearRoamingMessage(arguments, result);
+      return;
     default:
       break;
   }
@@ -1916,6 +1918,40 @@ void FLTMessageService::modifyMessage(
             convertModifyMessageResult(&messageResult);
         result->Success(NimResult::getSuccessResult(resultMap));
       },
+      [result](v2::V2NIMError error) {
+        result->Error("", error.desc,
+                      NimResult::getErrorResult(error.code, error.desc));
+      });
+}
+
+void FLTMessageService::clearRoamingMessage(
+    const flutter::EncodableMap* arguments,
+    std::shared_ptr<flutter::MethodResult<flutter::EncodableValue>> result) {
+  if (!arguments) {
+    return;
+  }
+
+  std::vector<nstd::string> conversationIds;
+
+  auto iter = arguments->begin();
+  for (iter; iter != arguments->end(); ++iter) {
+    if (iter->second.IsNull()) {
+      continue;
+    }
+
+    if (iter->first == flutter::EncodableValue("conversationIds")) {
+      auto idList = std::get<flutter::EncodableList>(iter->second);
+      for (auto& it : idList) {
+        auto cId = std::get<std::string>(it);
+        conversationIds.emplace_back(cId);
+      }
+    }
+  }
+  auto& instance = v2::V2NIMClient::get();
+  auto& messageService = instance.getMessageService();
+  messageService.clearRoamingMessage(
+      conversationIds,
+      [result]() { result->Success(NimResult::getSuccessResult()); },
       [result](v2::V2NIMError error) {
         result->Error("", error.desc,
                       NimResult::getErrorResult(error.code, error.desc));

@@ -516,4 +516,11 @@ class MessageService {
       NIMMessage message, NIMUpdateLocalMessageParams params) {
     return _platform.updateLocalMessage(message, params);
   }
+
+  /// 仅清空会话漫游消息， 单次传递最多50个会话ID
+  /// [conversationIds] 需要清理的会话ID
+  Future<NIMResult<void>> clearRoamingMessage(
+      {required List<String> conversationIds}) {
+    return _platform.clearRoamingMessage(conversationIds: conversationIds);
+  }
 }

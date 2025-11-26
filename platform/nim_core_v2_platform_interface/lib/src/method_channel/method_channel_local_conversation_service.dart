@@ -376,4 +376,27 @@ class MethodChannelLocalConversationService
             ?.map((e) => NIMConversation.fromJson(Map<String, dynamic>.from(e)))
             .toList());
   }
+
+  /// 更新会话已读时间戳
+  /// conversationId – 会话id
+  Future<NIMResult<void>> setCurrentConversation(String conversationId) async {
+    return NIMResult.fromMap(await invokeMethod(
+      'setCurrentConversation',
+      arguments: {
+        'conversationId': conversationId,
+      },
+    ));
+  }
+
+  /// 仅清空会话漫游消息， 单次传递最多50个会话ID
+  /// [conversationIds] 需要清理的会话ID
+  Future<NIMResult<void>> clearRoamingMessage(
+      {required List<String> conversationIds}) async {
+    return NIMResult.fromMap(await invokeMethod(
+      'clearRoamingMessage',
+      arguments: {
+        'conversationIds': conversationIds,
+      },
+    ));
+  }
 }

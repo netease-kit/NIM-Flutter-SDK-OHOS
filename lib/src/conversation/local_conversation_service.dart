@@ -205,4 +205,10 @@ class V2NIMLocalConversationService {
   Future<NIMResult<List<NIMConversation>>> getStickTopConversationList() async {
     return _platform.getStickTopConversationList();
   }
+
+  /// 设置当前聊天账号
+  /// [conversationId] – 会话id
+  Future<NIMResult<void>> setCurrentConversation(String conversationId) async {
+    return _platform.setCurrentConversation(conversationId);
+  }
 }

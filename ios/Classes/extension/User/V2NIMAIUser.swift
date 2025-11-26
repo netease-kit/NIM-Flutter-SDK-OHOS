@@ -22,6 +22,7 @@ extension V2NIMAIUser {
     keyPaths[#keyPath(V2NIMAIUser.serverExtension)] = serverExtension
     keyPaths[#keyPath(V2NIMAIUser.modelType)] = modelType.rawValue
     keyPaths[#keyPath(V2NIMAIUser.modelConfig)] = modelConfig?.toDic()
+    keyPaths[#keyPath(V2NIMAIUser.aiModelType)] = aiModelType
 
     return keyPaths
   }
@@ -69,6 +70,9 @@ extension V2NIMAIUser {
     }
     if let updateTime = arguments[#keyPath(V2NIMAIUser.updateTime)] as? Double {
       user.updateTime = TimeInterval(updateTime / 1000)
+    }
+    if let aiModelType = arguments[#keyPath(V2NIMAIUser.aiModelType)] as? Int {
+      user.aiModelType = aiModelType
     }
     return user
   }

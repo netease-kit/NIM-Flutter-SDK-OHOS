@@ -1697,7 +1697,8 @@ class NIMMessageListResult {
   @JsonKey(fromJson: _messageListFromJson)
   List<NIMMessage>? messages;
 
-  /// 消息列表的总数
+  /// 下次查询的锚点消息
+  /// 如果该字段为空，则表示无消息返回
   @JsonKey(fromJson: nimMessageFromJson)
   NIMMessage? anchorMessage;
 

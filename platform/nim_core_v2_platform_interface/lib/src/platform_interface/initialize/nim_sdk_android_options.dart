@@ -96,6 +96,9 @@ class NIMAndroidSDKOptions extends NIMSDKOptions {
   /// 开启用户信息提供者，由开发者提供给 NIM SDK 使用，主要用于通知栏显示的用户昵称和头像。
   bool enableUserInfoProvider = false;
 
+  /// 开启弹出通知前获取通道ID的回调。
+  bool enableNotificationChannelProvider = false;
+
   /// 开启定制通知栏消息提醒的文案
   bool enableMessageNotifierCustomization = false;
 
@@ -154,6 +157,16 @@ class NIMAndroidSDKOptions extends NIMSDKOptions {
   @JsonKey(includeFromJson: false, includeToJson: false)
   NIMMakeRevokeMsgTipProvider? makeRevokeMsgTipProvider;
 
+  ///定制消息提醒（通知栏提醒）本地通知 Category 类型
+  ///[enableMessageNotifierCustomization] 设置为true 方能生效
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  NIMMakeCategoryProvider? makeCategoryProvider;
+
+  ///配置通知要走的通道（ChannelId），若不配置，则根据响铃振动走对应的默认通道。
+  ///[enableNotificationChannelProvider] 设置为true 方能生效
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  NIMNotificationChannelProvider? notificationChannelProvider;
+
   NIMAndroidSDKOptions({
     /// android configurations
     this.improveSDKProcessPriority = true,
@@ -174,10 +187,13 @@ class NIMAndroidSDKOptions extends NIMSDKOptions {
     this.makeNotifyContentProvider,
     this.makeTickerProvider,
     this.makeRevokeMsgTipProvider,
+    this.makeCategoryProvider,
+    this.notificationChannelProvider,
     this.enableV2CloudConversation = false,
     this.enableMessageNotifierCustomization = false,
     this.manualProvidePushTokenProvider,
     this.enableUserInfoProvider = false,
+    this.enableNotificationChannelProvider = false,
 
     /// common configurations
     required String appKey,
@@ -475,6 +491,18 @@ class NIMStatusBarNotificationConfig {
   final String? customTitleWhenTeamNameEmpty;
 
   ///
+  /// 是否开启高优先级通知NotificationManager.IMPORTANCE_HIGH，仅针对Android 8.0+有效。<br>
+  /// 默认为false
+  ///
+  final bool highImportance;
+
+  ///
+  /// 异步通知栏执行。<br>
+  /// 默认为false
+  ///
+  final bool asyncNotifierExe;
+
+  ///
   /// 点击通知栏传递的extra类型
   ///
   @JsonKey(defaultValue: NIMNotificationExtraType.message)
@@ -499,6 +527,8 @@ class NIMStatusBarNotificationConfig {
     this.showBadge = true,
     this.customTitleWhenTeamNameEmpty,
     this.notificationExtraType = NIMNotificationExtraType.message,
+    this.asyncNotifierExe = false,
+    this.highImportance = false,
   });
 
   factory NIMStatusBarNotificationConfig.fromMap(Map<String, dynamic> map) {
@@ -641,3 +671,23 @@ typedef NIMMakeTickerProvider = Future<String?> Function(
 /// 消息撤回提醒文案
 typedef NIMMakeRevokeMsgTipProvider = Future<String?> Function(
     String? revokeAccount, NIMMessage? message);
+
+///定制消息撤回提醒文案
+
+///定制消息提醒（通知栏提醒）本地通知 Category 类型
+///Params:
+/// [message] – 发来的消息
+/// Returns:
+/// 本地通知类型，类型标准请参照 android.app.Notification.CATEGORY_MESSAGE
+typedef NIMMakeCategoryProvider = Future<String?> Function(NIMMessage? message);
+
+///定制消息提醒（通知栏提醒）本地通知 Category 类型
+///Params:
+/// [donNotDisturb] – 免打扰开启，而且收到的不是强推消息
+// [tooFast] – 两次通知间间隔短
+// [ring] – 是否响铃
+// [vibrate] – 是否振动
+/// Returns:
+/// 通道ID，如果返回""或者null，则使用默认通道
+typedef NIMNotificationChannelProvider = Future<String?> Function(
+    bool? donNotDisturb, bool? tooFast, bool? ring, bool? vibrate);

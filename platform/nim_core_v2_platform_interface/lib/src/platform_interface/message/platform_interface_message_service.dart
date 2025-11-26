@@ -476,6 +476,13 @@ abstract class MessageServicePlatform extends Service {
       NIMMessage message, NIMUpdateLocalMessageParams params) {
     throw UnimplementedError('updateLocalMessage() is not implemented');
   }
+
+  /// 仅清空会话漫游消息， 单次传递最多50个会话ID
+  /// [conversationIds] 需要清理的会话ID
+  Future<NIMResult<void>> clearRoamingMessage(
+      {required List<String> conversationIds}) {
+    throw UnimplementedError('clearRoamingMessage() is not implemented');
+  }
 }
 
 /// 是否过滤消息

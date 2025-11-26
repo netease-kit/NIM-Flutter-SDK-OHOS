@@ -7,8 +7,9 @@ part of 'ai_models.dart';
 // **************************************************************************
 
 NIMAIUser _$NIMAIUserFromJson(Map<String, dynamic> json) => NIMAIUser(
-      modelType:
-          $enumDecodeNullable(_$NIMAIModelTypeEnumMap, json['modelType']),
+      modelType: $enumDecodeNullable(_$NIMAIModelTypeEnumMap, json['modelType'],
+          unknownValue: NIMAIModelType.nimAiModelTypeUKnown),
+      aiModelType: (json['aiModelType'] as num?)?.toInt(),
       modelConfig: _nimAIModelConfigFromJson(json['modelConfig'] as Map?),
       accountId: json['accountId'] as String?,
       name: json['name'] as String?,
@@ -37,6 +38,7 @@ Map<String, dynamic> _$NIMAIUserToJson(NIMAIUser instance) => <String, dynamic>{
       'updateTime': instance.updateTime,
       'modelType': _$NIMAIModelTypeEnumMap[instance.modelType],
       'modelConfig': instance.modelConfig?.toJson(),
+      'aiModelType': instance.aiModelType,
     };
 
 const _$NIMAIModelTypeEnumMap = {

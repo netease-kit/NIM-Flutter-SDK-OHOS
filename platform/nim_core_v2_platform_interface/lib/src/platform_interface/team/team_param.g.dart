@@ -88,7 +88,7 @@ const _$NIMTeamChatBannedModeEnumMap = {
   NIMTeamChatBannedMode.unknown: -1,
   NIMTeamChatBannedMode.chatBannedModeNone: 0,
   NIMTeamChatBannedMode.chatBannedModeBannedNormal: 1,
-  NIMTeamChatBannedMode.chatBannedModeBannedAll: 2,
+  NIMTeamChatBannedMode.chatBannedModeBannedAll: 3,
 };
 
 NIMUpdateTeamInfoParams _$NIMUpdateTeamInfoParamsFromJson(

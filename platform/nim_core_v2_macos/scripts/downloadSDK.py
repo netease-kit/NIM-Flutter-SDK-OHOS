@@ -6,7 +6,7 @@ from urllib.parse import urlparse
 from pathlib import Path
 
 def main():
-    url = "https://yx-web-nosdn.netease.im/package/1752828543743/nim-darwin-universal-10-9-30-4172-build-3140671.tar.gz?download=nim-darwin-universal-10-9-30-4172-build-3140671.tar.gz"
+    url = "https://yx-web-nosdn.netease.im/package/1760692720432/nim-darwin-universal-release-10-9-54-4490-build-3258515.tar.gz?download=nim-darwin-universal-release-10-9-54-4490-build-3258515.tar.gz"
 
     if not url:
         print("[downloadSDK]: Platform not supported.")

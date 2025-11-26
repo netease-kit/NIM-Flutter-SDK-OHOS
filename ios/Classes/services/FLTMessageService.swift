@@ -51,6 +51,7 @@ enum MessageType: String {
   case getCollectionListExByOption
   case updateLocalMessage
   case setMessageFilter
+  case clearRoamingMessage
 }
 
 class FLTMessageService: FLTBaseService, FLTService {
@@ -161,6 +162,8 @@ class FLTMessageService: FLTBaseService, FLTService {
       updateLocalMessage(arguments, resultCallback)
     case MessageType.setMessageFilter.rawValue:
       setMessageFilter(arguments, resultCallback)
+    case MessageType.clearRoamingMessage.rawValue:
+      clearRoamingMessage(arguments, resultCallback)
     default:
       resultCallback.notImplemented()
     }
@@ -841,7 +844,7 @@ class FLTMessageService: FLTBaseService, FLTService {
   }
 
   func getTeamMessageReceiptDetail(_ arguments: [String: Any], _ resultCallback: ResultCallback) {
-    FLTALog.infoLog(FLTMessageService.className, desc: "getTeamMessageReceiptDetail argument \(arguments)")
+    // FLTALog.infoLog(FLTMessageService.className, desc: "getTeamMessageReceiptDetail argument \(arguments)")
 
     guard let messageDic = arguments["message"] as? [String: Any] else {
       parameterError(resultCallback)
@@ -866,7 +869,7 @@ class FLTMessageService: FLTBaseService, FLTService {
   }
 
   func voiceToText(_ arguments: [String: Any], _ resultCallback: ResultCallback) {
-    FLTALog.infoLog(FLTMessageService.className, desc: "voiceToText argument \(arguments)")
+    // FLTALog.infoLog(FLTMessageService.className, desc: "voiceToText argument \(arguments)")
 
     guard let paramsDic = arguments["params"] as? [String: Any] else {
       parameterError(resultCallback)
@@ -1124,6 +1127,26 @@ class FLTMessageService: FLTBaseService, FLTService {
       let err = error.nserror as NSError
       weakSelf?.errorCallBack(resultCallback, err.description, err.code)
       FLTALog.errorLog(FLTMessageService.className, desc: "updateLocalMessage error \(error.nserror.localizedDescription)")
+    }
+  }
+
+  func clearRoamingMessage(_ arguments: [String: Any], _ resultCallback: ResultCallback) {
+    FLTALog.infoLog(FLTMessageService.className, desc: "clearRoamingMessage argument \(arguments)")
+
+    guard let conversationIds = arguments["conversationIds"] as? [String] else {
+      parameterError(resultCallback)
+      return
+    }
+
+    weak var weakSelf = self
+    NIMSDK.shared().v2MessageService.clearRoamingMessage(conversationIds) {
+      // 成功回调
+      weakSelf?.successCallBack(resultCallback, ["success": true])
+    } failure: { error in
+      // 失败回调
+      let err = error.nserror as NSError
+      weakSelf?.errorCallBack(resultCallback, err.description, err.code)
+      FLTALog.errorLog(FLTMessageService.className, desc: "clearRoamingMessage error \(error.nserror.localizedDescription)")
     }
   }
 }

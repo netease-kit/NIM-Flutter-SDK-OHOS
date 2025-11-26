@@ -98,7 +98,7 @@ enum NIMTeamChatBannedMode {
   chatBannedModeBannedNormal,
 
   ///< 全员禁言，群组所有成员都被禁言， 该状态只能OpenApi发起
-  @JsonValue(2)
+  @JsonValue(3)
   chatBannedModeBannedAll,
 }
 

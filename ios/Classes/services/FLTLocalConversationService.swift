@@ -26,6 +26,7 @@ enum V2LocalConversationAPIType: String {
   case getConversationReadTime
   case markConversationRead
   case getStickTopConversationList
+  case setCurrentConversation
 }
 
 @objcMembers
@@ -91,6 +92,8 @@ class FLTLocalConversationService: FLTBaseService, FLTService, V2NIMLocalConvers
       markConversationRead(arguments, resultCallback)
     case V2LocalConversationAPIType.getStickTopConversationList.rawValue:
       getStickTopConversationList(arguments, resultCallback)
+    case V2LocalConversationAPIType.setCurrentConversation.rawValue:
+      setCurrentConversation(arguments, resultCallback)
     default:
       resultCallback.notImplemented()
     }
@@ -179,6 +182,28 @@ class FLTLocalConversationService: FLTBaseService, FLTService, V2NIMLocalConvers
     } failure: { error in
       weakSelf?.errorCallBack(resultCallback, error.nserror.localizedDescription, Int(error.code))
       FLTALog.errorLog(FLTLocalConversationService.className, desc: "getConversation error \(error.nserror.localizedDescription)")
+    }
+  }
+
+  func setCurrentConversation(_ arguments: [String: Any], _ resultCallback: ResultCallback) {
+    FLTALog.infoLog(FLTLocalConversationService.className, desc: "setCurrentConversation argument \(arguments)")
+
+    guard let conversationId = arguments["conversationId"] as? String else {
+      parameterError(resultCallback)
+      return
+    }
+
+    weak var weakSelf = self
+    var error: V2NIMError?
+    NIMSDK.shared().v2LocalConversationService.setCurrentConversation(conversationId, error: &error)
+
+    if let error = error {
+      // 处理错误情况
+      weakSelf?.errorCallBack(resultCallback, error.nserror.localizedDescription, Int(error.code))
+      FLTALog.errorLog(FLTLocalConversationService.className, desc: "setCurrentConversation error \(error.nserror.localizedDescription)")
+    } else {
+      // 成功回调，返回空或成功标识
+      weakSelf?.successCallBack(resultCallback, ["success": true])
     }
   }
 

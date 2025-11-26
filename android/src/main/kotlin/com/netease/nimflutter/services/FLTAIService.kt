@@ -229,6 +229,7 @@ class FLTAIService(
             "createTime" to createTime,
             "updateTime" to updateTime,
             "modelType" to modelType.value,
+            "aiModelType" to aiModelType,
             "modelConfig" to modelConfig?.toMap()
         )
 

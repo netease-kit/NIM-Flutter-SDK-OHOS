@@ -120,7 +120,8 @@ class FLTMessageService(
                 "searchLocalMessages" to ::searchLocalMessages,
                 "getMessageListEx" to ::getMessageListEx,
                 "getCollectionListExByOption" to ::getCollectionListExByOption,
-                "updateLocalMessage" to ::updateLocalMessage
+                "updateLocalMessage" to ::updateLocalMessage,
+                "clearRoamingMessage" to ::clearRoamingMessage
             )
         }
     }
@@ -408,7 +409,7 @@ class FLTMessageService(
             return NimResult(code = paramErrorCode, errorDetails = "message is empty")
         }
 
-        val paramsMap = arguments["params"] as Map<String, *>?
+        val paramsMap = arguments["revokeParams"] as Map<String, *>?
         return suspendCancellableCoroutine { cont ->
             NIMClient.getService(V2NIMMessageService::class.java).revokeMessage(
                 messageMap?.toMessage(),
@@ -1279,6 +1280,24 @@ class FLTMessageService(
                 paramsMap.toNIMUpdateLocalMessageParams(),
                 {
                     cont.resume(NimResult(0, data = it.toMap()))
+                },
+                {
+                    cont.resume(NimResult(it.code, errorDetails = it.desc))
+                }
+            )
+        }
+    }
+
+    private suspend fun clearRoamingMessage(arguments: Map<String, *>): NimResult<Void> {
+        val conversationIds = arguments["conversationIds"] as List<String>?
+//        if (conversationIds?.isEmpty() == true) {
+//            return NimResult(code = paramErrorCode, errorDetails = "conversationIds is empty")
+//        }
+        return suspendCancellableCoroutine { cont ->
+            NIMClient.getService(V2NIMMessageService::class.java).clearRoamingMessage(
+                conversationIds,
+                {
+                    cont.resume(NimResult(0, data = null))
                 },
                 {
                     cont.resume(NimResult(it.code, errorDetails = it.desc))

@@ -119,8 +119,8 @@ class NimCore {
 
   static const String tag = 'nim_core_v2';
   //todo 发版前记得处理此处的版本号，数据统计使用
-  static const int _versionCode = 1092;
-  static const String versionName = '10.9.2';
+  static const int _versionCode = 1093;
+  static const String versionName = '10.9.3';
   static const String _hash = '02566d6321d1d27669d9d369d2f525bc2cdaee10';
 
   bool _initialized = false;

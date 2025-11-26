@@ -66,6 +66,7 @@ fun Map<String, *>.toLoginOptions(): V2NIMLoginOption {
         this.retryCount = this@toLoginOptions["retryCount"] as? Int
         this.timeout = this@toLoginOptions["timeout"] as? Long
         this.forceMode = this@toLoginOptions["forceMode"] as? Boolean
+        this.offlineMode = this@toLoginOptions["offlineMode"] as? Boolean
         this.authType = V2NIMLoginAuthType.typeOfValue(this@toLoginOptions["authType"] as? Int ?: 0)
         this.syncLevel = V2NIMDataSyncLevel.typeOfValue(this@toLoginOptions["syncLevel"] as? Int ?: 0)
     }

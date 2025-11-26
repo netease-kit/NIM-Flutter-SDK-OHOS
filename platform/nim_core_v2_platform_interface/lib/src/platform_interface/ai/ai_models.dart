@@ -10,7 +10,15 @@ part 'ai_models.g.dart';
 @JsonSerializable(explicitToJson: true)
 class NIMAIUser extends NIMUserInfo {
   ///大模型类型
+  @Deprecated('use aiModelType instead')
   NIMAIModelType? modelType;
+
+  /// 获取大模型类型
+  /// 	 * 0: 未知
+  /// 	 * 1: 通义千问
+  /// 	 * 2: 微软Azure
+  /// 	 * 3: 私有本地大模型
+  int? aiModelType;
 
   ///大模型配置
   @JsonKey(fromJson: _nimAIModelConfigFromJson)
@@ -19,6 +27,7 @@ class NIMAIUser extends NIMUserInfo {
   NIMAIUser(
       {this.modelType,
       this.modelConfig,
+      this.aiModelType,
       String? accountId,
       String? name,
       String? avatar,

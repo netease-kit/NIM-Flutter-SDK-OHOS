@@ -145,6 +145,8 @@ v2::V2NIMLoginOption getLoginOption(const flutter::EncodableMap* arguments) {
       option.timeout = std::get<int>(iter->second);
     } else if (iter->first == flutter::EncodableValue("forceMode")) {
       option.forceMode = std::get<bool>(iter->second);
+    } else if (iter->first == flutter::EncodableValue("offlineMode")) {
+      //      option.offlineMode = std::get<bool>(iter->second);
     } else if (iter->first == flutter::EncodableValue("authType")) {
       option.authType = v2::V2NIMLoginAuthType(std::get<int>(iter->second));
     } else if (iter->first == flutter::EncodableValue("syncLevel")) {

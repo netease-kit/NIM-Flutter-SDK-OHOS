@@ -21,7 +21,7 @@ extension V2NIMMessageAIConfig {
 
     if let aiRAGsList = arguments["aiRAGs"] as? [[String: Any]] {
       var aiRAGs = [V2NIMAIRAGInfo]()
-      aiRAGsList.forEach { it in
+      for it in aiRAGsList {
         let aiRAG = V2NIMAIRAGInfo.fromDic(it)
         aiRAGs.append(aiRAG)
       }
