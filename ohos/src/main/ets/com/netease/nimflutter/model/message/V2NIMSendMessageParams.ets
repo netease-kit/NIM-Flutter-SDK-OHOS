@@ -1,6 +1,7 @@
 import { V2NIMSendMessageParams } from '@nimsdk/base';
 import { Any } from '@ohos/flutter_ohos';
 import { convertMap2MessageAIConfig } from './V2NIMMessageAIConfig';
+import { convertMap2MessageAIConfigParams } from './V2NIMMessageAIConfigParams';
 import { convertMap2MessageAntispamConfig } from './V2NIMMessageAntispamConfig';
 import { convertMap2MessageConfig } from './V2NIMMessageConfig';
 import { convertMap2MessagePushConfig } from './V2NIMMessagePushConfig';
@@ -43,7 +44,7 @@ export function convertMap2SendMessageParams(argumentsMap: Map<string, Any>): V2
   }
 
   if (argumentsMap.get("aiConfig") !== undefined && argumentsMap.get("aiConfig") !== null) {
-    sendMessageParams.aiConfig = convertMap2MessageAIConfig(argumentsMap.get("aiConfig") as Map<string, Any>);
+    sendMessageParams.aiConfig = convertMap2MessageAIConfigParams(argumentsMap.get("aiConfig") as Map<string, Any>);
   }
 
   if (argumentsMap.get("targetConfig") !== undefined && argumentsMap.get("targetConfig") !== null) {

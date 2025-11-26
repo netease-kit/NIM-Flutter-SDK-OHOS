@@ -273,7 +273,7 @@ export class FLTMessageService extends FLTService {
 
     let message = convertMap2Message(argument.get("message") as Map<string, Any>)
     let params =
-      argument.get("params") ? convertMap2MessageRevokeParams(argument.get("params") as Map<string, Any>) : undefined
+      argument.get("revokeParams") ? convertMap2MessageRevokeParams(argument.get("revokeParams") as Map<string, Any>) : undefined
 
     this.nim.messageService?.revokeMessage(message, params).then(() => {
       this.onSuccess(result, null)
@@ -737,7 +737,7 @@ export class FLTMessageService extends FLTService {
   private messageDeserialization(argument: Map<string, Any>, result: MethodResult) {
     Log.d(this.serviceName, "messageDeserialization")
 
-    let messageStr = argument.get("messageStr") ? argument.get("messageStr") as string : "";
+    let messageStr = argument.get("msg") ? argument.get("msg") as string : "";
 
     const message = this.nim.messageConverter?.messageDeserialization(messageStr)
     if (message) {

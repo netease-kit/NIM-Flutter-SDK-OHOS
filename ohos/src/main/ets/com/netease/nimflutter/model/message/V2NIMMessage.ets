@@ -199,6 +199,16 @@ export function convertMessage2Map(result: V2NIMMessage): Map<string, Any> {
     result.messageConfig?.lastMessageUpdateEnabled === null){
     result.messageConfig.lastMessageUpdateEnabled = true
   }
+  if(result.threadRoot != undefined && result.threadRoot != null){
+    result.threadRoot.messageServerId = result.threadRoot.messageServerId + ""
+  }
+
+  if(result.threadReply != undefined && result.threadReply != null){
+    result.threadReply.messageServerId = result.threadReply.messageServerId + ""
+  }
+  if(typeof result.pushConfig?.forcePushAccountIds === 'string' || typeof result.pushConfig?.forcePushAccountIds === 'number'){
+    result.pushConfig.forcePushAccountIds = [result.pushConfig?.forcePushAccountIds + '']
+  }
   let res: Map<string, Any> = new Map<string, Any>(Object.entries(result))
   if (result.attachment) {
     const attachment: Map<string, Any> | undefined =
@@ -206,6 +216,9 @@ export function convertMessage2Map(result: V2NIMMessage): Map<string, Any> {
     if (attachment) {
       res.set("attachment", attachment)
     }
+  }
+  if(result.messageServerId !== undefined && result.messageServerId !== null){
+    res.set("messageServerId",result.messageServerId + "")
   }
   return res
 }

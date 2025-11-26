@@ -26,7 +26,7 @@ export class FLTNotificationService extends FLTService {
       this.notifyEvent("onReceiveCustomNotifications", new Map<string, Any>().set(
         "customNotifications",customNotification.map(notify => {
          if(typeof notify.pushConfig?.forcePushAccountIds === 'string' ){
-           notify.pushConfig.forcePushAccountIds = JSON.parse(notify.pushConfig?.forcePushAccountIds)
+           notify.pushConfig.forcePushAccountIds = [notify.pushConfig?.forcePushAccountIds]
          }
         return notify;
       })

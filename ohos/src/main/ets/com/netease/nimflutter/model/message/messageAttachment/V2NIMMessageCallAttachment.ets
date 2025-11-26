@@ -36,6 +36,8 @@ export function convertMap2MessageCallAttachment(argumentsMap: Map<string, Any>)
 }
 
 export function convertMessageCallAttachment2Map(result: V2NIMMessageCallAttachment): Map<string, Any> {
-  return new Map<string, Any>(Object.entries(result)).set("nimCoreMessageType",
+  let resultMap:Map<string, Any> = new Map<string, Any>(Object.entries(result)).set("nimCoreMessageType",
     V2NIMMessageType.V2NIM_MESSAGE_TYPE_CALL)
+  resultMap.set("channelId",result.channelId + "")
+  return resultMap
 }

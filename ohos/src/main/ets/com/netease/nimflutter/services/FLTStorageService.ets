@@ -100,7 +100,8 @@ export class FLTStorageService extends FLTService {
     let instanceId = argument.get("instanceId") as number | undefined | null;
     let fileParams: V2NIMUploadFileParams = {
       filePath: fileParamsMap.get("filePath") as string,
-      sceneName: fileParamsMap.get("sceneName") as string
+      sceneName: (fileParamsMap.get("sceneName") === null || fileParamsMap.get("sceneName") === undefined) ?
+        "nim_default_profile_icon" : fileParamsMap.get("sceneName") as string
     }
     if (instanceId !== undefined && instanceId != null) {
       const storageServiceCr = V2NIMChatroomClient.getInstance(instanceId)?.storageService;
