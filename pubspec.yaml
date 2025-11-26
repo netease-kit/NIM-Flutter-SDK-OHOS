@@ -1,6 +1,6 @@
 name: nim_core_v2
 description: A Flutter plugin for NetEase IM SDK on Android, iOS and Windows.
-version: 10.9.2-ohos-beta
+version: 10.9.4-ohos
 homepage: https://github.com/netease-kit/NIM-Flutter-SDK
 # remove before publish
 #publish_to: none

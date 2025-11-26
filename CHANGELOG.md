@@ -1,10 +1,35 @@
+## 10.9.4-ohos(Nov 26, 2025)
+
+### New Features
+* 解决鸿蒙系统已知问题
+
+## 10.9.3+2(Oct 19, 2025)
+
+### Dependency Updates
+* Android NIMSDK 升级到10.9.52
+* iOS NIMSDK 升级到10.9.52
+
+## 10.9.3+1(Sep 19, 2025)
+
+### Bug Fixes
+* 修复Android 端撤回消息参数无效的问题
+
+### Dependency Updates
+* Android NIMSDK 升级到10.9.45
+* iOS NIMSDK 升级到10.9.51
+
+## 10.9.3(Sep 3, 2025)
+
+### New Features
+* `FLTMessageService`新增接口`clearRoamingMessage`（android/iOS/macOS/Window）
+* 'FLTLocalConversationService' 新增接口 `setCurrentConversation`（android/iOS/macOS/Window）
+* V2NIMLoginOption 新增offlineMode参数(android/iOS)
+* Android支持设置makeCategory(android)，安卓SDK提供了 notificationChannelProvider 接口
+
 ## 10.9.2(Aug 22, 2025)
 
 ### New Features
 * 支持鸿蒙系统
-
-### Dependency Updates
-* ohos 依赖 10.9.41
 
 ## 10.9.1(Jul 23, 2025)
 

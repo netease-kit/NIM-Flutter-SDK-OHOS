@@ -160,12 +160,13 @@ export class FLTMessageCreatorService extends FLTService {
 
     const text = argument.get("text") as string
     const rawAttachment = argument.get("rawAttachment") as string
-    if (!text || !rawAttachment) {
-      return this.onErrorWithParamError(result, "text/rawAttachment is empty")
-    }
 
-    let message = this.nim.messageCreator.createCustomMessage(text, rawAttachment)
-    this.onSuccess(result, convertMessage2Map(message))
+    try{
+      let message = this.nim.messageCreator.createCustomMessage(text, rawAttachment)
+      this.onSuccess(result, convertMessage2Map(message))
+    }catch (e) {
+      this.onError(result, e as V2NIMError)
+    }
   }
 
   private createForwardMessage(argument: Map<string, Any>, result: MethodResult) {
@@ -189,9 +190,6 @@ export class FLTMessageCreatorService extends FLTService {
     Log.d(this.serviceName, "createTipsMessage")
 
     const text = argument.get("text") as string
-    if (!text) {
-      return this.onErrorWithParamError(result, "text is empty")
-    }
 
     let message = this.nim.messageCreator.createTipsMessage(text)
     this.onSuccess(result, convertMessage2Map(message))

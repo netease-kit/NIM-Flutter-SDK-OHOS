@@ -6,17 +6,17 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@nimsdk/conversation": "10.9.41",
-    "@nimsdk/localconversation": "10.9.41",
-    "@nimsdk/message": "10.9.41",
-    "@nimsdk/team": "10.9.41",
-    "@nimsdk/user": "10.9.41",
-    "@nimsdk/friend": "10.9.41",
-    "@nimsdk/signalling": "10.9.41",
-    "@nimsdk/nim": "10.9.41",
-    "@nimsdk/base": "10.9.41",
-    "@nimsdk/chatroom": "10.9.41",
-    "@nimsdk/search": "10.9.41"
+    "@nimsdk/conversation": "10.9.60-flutter",
+    "@nimsdk/localconversation": "10.9.60-flutter",
+    "@nimsdk/message": "10.9.60-flutter",
+    "@nimsdk/team": "10.9.60-flutter",
+    "@nimsdk/user": "10.9.60-flutter",
+    "@nimsdk/friend": "10.9.60-flutter",
+    "@nimsdk/signalling": "10.9.60-flutter",
+    "@nimsdk/nim": "10.9.60-flutter",
+    "@nimsdk/base": "10.9.60-flutter",
+    "@nimsdk/chatroom": "10.9.60-flutter",
+    "@nimsdk/search": "10.9.60-flutter"
   },
   "modelVersion": ""
 }
