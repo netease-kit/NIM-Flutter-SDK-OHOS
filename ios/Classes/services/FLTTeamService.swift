@@ -71,7 +71,7 @@ class FLTTeamService: FLTBaseService, FLTService, V2NIMTeamListener {
 
   /// 创建群
   public func createTeam(_ arguments: [String: Any], _ resultCallback: ResultCallback) {
-    FLTALog.infoLog(teamClassName, desc: "createTeam argument \(arguments)")
+    // FLTALog.infoLog(teamClassName, desc: "createTeam argument \(arguments)")
     guard let createTeamParamsArguments = arguments["createTeamParams"] as? [String: Any] else {
       parameterError(resultCallback)
       return

@@ -1,6 +1,6 @@
 name: nim_core_v2_macos
 description: macOS implementation of the nim_core plugin. that is a Flutter plugin for NetEase IM SDK.
-version: 10.9.1
+version: 10.9.3
 homepage: https://github.com/netease-kit/NIM-Flutter-SDK
 
 environment:

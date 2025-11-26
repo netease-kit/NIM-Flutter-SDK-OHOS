@@ -1,3 +1,21 @@
+## 10.9.3+1(Sep 19, 2025)
+
+### Bug Fixes
+* 删除不需要的ffi依赖，解决web端编译问题
+
+## 10.9.3(Sep 3, 2025)
+
+### New Features
+* `FLTMessageService`新增接口`clearRoamingMessage`（android/iOS/macOS/Window）
+* 'FLTLocalConversationService' 新增接口 `setCurrentConversation`（android/iOS/macOS/Window）
+* V2NIMLoginOption 新增offlineMode参数(android/iOS)
+* Android支持设置makeCategory(android)，安卓SDK提供了 notificationChannelProvider 接口
+
+## 10.9.1+1(Jul 31, 2025)
+
+### Bug fix
+* 解决全员禁言的问题
+
 ## 10.9.1(Jul 23, 2025)
 
 ### New Features

@@ -169,7 +169,7 @@ class NIMUpdatedTeamInfo {
   /// 群组禁言状态，-1表示未更新
   /// 0 不禁言
   /// 1 普通成员禁言，不包括管理员，群主
-  /// 2 全员禁言，所有人，该状态只能OpenApi发起
+  /// 3 全员禁言，所有人，该状态只能OpenApi发起
   int? chatBannedMode;
 
   ///客户自定义扩展， 由openApi设置

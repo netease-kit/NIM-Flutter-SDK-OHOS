@@ -30,6 +30,10 @@ extension V2NIMLoginOption {
     if let forceMode = json["forceMode"] as? Bool {
       option.forceMode = forceMode
     }
+
+    if let offlineMode = json["offlineMode"] as? Bool {
+      option.offlineMode = offlineMode
+    }
     return option
   }
 }

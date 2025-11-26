@@ -22,6 +22,12 @@ class MethodChannelInitializeService extends InitializeServicePlatform {
   ///定制消息撤回提醒文案
   NIMMakeRevokeMsgTipProvider? _makeRevokeMsgTipProvider;
 
+  ///定制消息提醒（通知栏提醒）本地通知 Category 类型
+  NIMMakeCategoryProvider? _makeCategoryProvider;
+
+  ///配置通知要走的通道（ChannelId），若不配置，则根据响铃振动走对应的默认通道
+  NIMNotificationChannelProvider? _notificationChannelProvider;
+
   @override
   Future<NIMResult<void>> initialize(NIMSDKOptions options,
       [Map<String, dynamic>? extras]) async {
@@ -35,6 +41,8 @@ class MethodChannelInitializeService extends InitializeServicePlatform {
       this._makeNotifyContentProvider = options.makeNotifyContentProvider;
       this._makeTickerProvider = options.makeTickerProvider;
       this._makeRevokeMsgTipProvider = options.makeRevokeMsgTipProvider;
+      this._makeCategoryProvider = options.makeCategoryProvider;
+      this._notificationChannelProvider = options.notificationChannelProvider;
       this._manualProvidePushTokenProvider =
           options.manualProvidePushTokenProvider;
     }
@@ -70,6 +78,10 @@ class MethodChannelInitializeService extends InitializeServicePlatform {
         return onMakeTicker(arguments);
       case 'onMakeRevokeMsgTip':
         return onMakeRevokeMsgTip(arguments);
+      case 'onMakeCategory':
+        return onMakeCategory(arguments);
+      case 'onGetChannelId':
+        return onGetChannelId(arguments);
       case 'onManualProvidePushToken':
         return manualProvidePushTokenNotifier(arguments);
       default:
@@ -113,6 +125,18 @@ class MethodChannelInitializeService extends InitializeServicePlatform {
     final message =
         messageMap != null ? NIMMessage.fromJson(messageMap.cast()) : null;
     final result = await _makeRevokeMsgTipProvider!(revokeAccount, message);
+    return result;
+  }
+
+  ///定制消息提醒（通知栏提醒）本地通知 Category 类型
+  Future<String?> onMakeCategory(arguments) async {
+    if (_makeCategoryProvider == null) {
+      return Future.value(null);
+    }
+    final messageMap = arguments['message'] as Map?;
+    final message =
+        messageMap != null ? NIMMessage.fromJson(messageMap.cast()) : null;
+    final result = await _makeCategoryProvider!(message);
     return result;
   }
 
@@ -173,6 +197,19 @@ class MethodChannelInitializeService extends InitializeServicePlatform {
     final message =
         messageMap != null ? NIMMessage.fromJson(messageMap.cast()) : null;
     final result = await _displayTitleForMessageNotifierProvider!(message);
+    return result;
+  }
+
+  Future<String?> onGetChannelId(arguments) async {
+    if (_notificationChannelProvider == null) {
+      return Future.value(null);
+    }
+    final donNotDisturb = arguments['donNotDisturb'] as bool?;
+    final tooFast = arguments['tooFast'] as bool?;
+    final ring = arguments['ring'] as bool?;
+    final vibrate = arguments['vibrate'] as bool?;
+    final result = await _notificationChannelProvider!(
+        donNotDisturb, tooFast, ring, vibrate);
     return result;
   }
 

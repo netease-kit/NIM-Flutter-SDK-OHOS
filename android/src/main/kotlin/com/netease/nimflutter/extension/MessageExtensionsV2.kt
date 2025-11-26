@@ -367,7 +367,7 @@ fun V2NIMMessageConfig.toMap(): Map<String, Any?> =
         "unreadEnabled" to this.isUnreadEnabled
     )
 
-fun Map<String, *>.toMessageAttachment(): V2NIMMessageAttachment {
+fun Map<String, *>.toMessageAttachment(): V2NIMMessageAttachment? {
     val messageType = this["nimCoreMessageType"] as? Int ?: 0
     when (messageType) {
         V2NIMMessageType.V2NIM_MESSAGE_TYPE_LOCATION.value -> {

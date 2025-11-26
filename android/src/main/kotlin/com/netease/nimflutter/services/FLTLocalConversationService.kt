@@ -75,7 +75,10 @@ class FLTLocalConversationService(
             "getConversationReadTime" to ::getConversationReadTime,
             // 标记会话已读时间戳
             "markConversationRead" to ::markConversationRead,
-            "getStickTopConversationList" to ::getStickTopConversationList
+            // 查询当前全量置顶的会话列表 排序方式：倒序
+            "getStickTopConversationList" to ::getStickTopConversationList,
+            // 设置当前聊天账号
+            "setCurrentConversation" to ::setCurrentConversation
         )
     }
 
@@ -891,6 +894,41 @@ class FLTLocalConversationService(
                             )
                         }
                     )
+            }
+        }
+    }
+
+    /**
+     * 设置当前聊天账号
+     * Params:
+     * conversationId – 当前聊天会话id 如果为空字符串， null， 均表示不设置， 不在聊天界面 否则表示为具体的聊天界面:当前账号下， 不触发未读变更， 不触发在线通知，包括：P2P, TEAM, SUPERTEAM
+     * Returns:
+     * 是否设置成功,失败返回V2NIMError
+     */
+    private suspend fun setCurrentConversation(arguments: Map<String, *>): NimResult<Nothing> {
+        return suspendCancellableCoroutine { cont ->
+            val conversationId = arguments["conversationId"] as? String
+            if (conversationId == null) {
+                cont.resume(
+                    NimResult(
+                        code = FLTConstant.paramErrorCode,
+                        errorDetails = "setCurrentConversation param is null"
+                    )
+                )
+            } else {
+                val result = NIMClient.getService(V2NIMLocalConversationService::class.java)
+                    .setCurrentConversation(conversationId)
+                if (result.isSuccess) {
+                    cont.resume(NimResult.SUCCESS)
+                } else {
+                    cont.resume(
+                        if (result.error != null) {
+                            NimResult(code = result.error.code, errorDetails = result.error.desc)
+                        } else {
+                            NimResult(code = -1, errorDetails = "markConversationRead failed!")
+                        }
+                    )
+                }
             }
         }
     }

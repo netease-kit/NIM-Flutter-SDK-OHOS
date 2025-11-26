@@ -20,9 +20,9 @@ link_directories("${CMAKE_CURRENT_SOURCE_DIR}/../third_party/alog/lib/x64/${CMAK
 
 # nim_sdk
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-    set(NIM_SDK_URL "https://yx-web-nosdn.netease.im/package/1752828556839/nim-win32-x64-10-9-30-4172-build-3140671.tar.gz?download=nim-win32-x64-10-9-30-4172-build-3140671.tar.gz")
+    set(NIM_SDK_URL "https://yx-web-nosdn.netease.im/package/1760692762787/nim-win32-x64-release-10-9-54-4490-build-3258515.tar.gz?download=nim-win32-x64-release-10-9-54-4490-build-3258515.tar.gz")
 else()
-    set(NIM_SDK_URL "https://yx-web-nosdn.netease.im/package/1752828551698/nim-win32-ia32-10-9-30-4172-build-3140671.tar.gz?download=nim-win32-ia32-10-9-30-4172-build-3140671.tar.gz")
+    set(NIM_SDK_URL "https://yx-web-nosdn.netease.im/package/1760692757561/nim-win32-ia32-release-10-9-54-4490-build-3258515.tar.gz?download=nim-win32-ia32-release-10-9-54-4490-build-3258515.tar.gz")
 endif()
 set(SPLIT "download=")
 string(LENGTH ${SPLIT} SPLIT_LENGTH)

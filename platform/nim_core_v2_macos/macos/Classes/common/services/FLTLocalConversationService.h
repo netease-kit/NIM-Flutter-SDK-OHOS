@@ -105,6 +105,9 @@ class FLTLocalConversationService : public FLTService {
   void getStickTopConversationList(
       const flutter::EncodableMap* arguments,
       std::shared_ptr<flutter::MethodResult<flutter::EncodableValue>> result);
+  void setCurrentConversation(
+      const flutter::EncodableMap* arguments,
+      std::shared_ptr<flutter::MethodResult<flutter::EncodableValue>> result);
 
  private:
   v2::V2NIMLocalConversationListener conversationListener;

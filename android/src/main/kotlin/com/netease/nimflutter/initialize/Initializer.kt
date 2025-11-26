@@ -19,8 +19,8 @@ import com.netease.nimflutter.ResultCallback
 import com.netease.nimflutter.SafeResult
 import com.netease.nimflutter.convertToNIMServerAddresses
 import com.netease.nimflutter.convertToStatusBarNotificationConfig
+import com.netease.nimflutter.extension.toMap
 import com.netease.nimflutter.stringFromSessionTypeEnum
-import com.netease.nimflutter.toMap
 import com.netease.nimlib.sdk.NIMClient
 import com.netease.nimlib.sdk.NosTokenSceneConfig
 import com.netease.nimlib.sdk.Observer
@@ -31,10 +31,12 @@ import com.netease.nimlib.sdk.mixpush.MixPushConfig
 import com.netease.nimlib.sdk.mixpush.NIMPushClient
 import com.netease.nimlib.sdk.mixpush.model.MixPushTypeEnum
 import com.netease.nimlib.sdk.msg.MessageNotifierCustomization
+import com.netease.nimlib.sdk.msg.NotificationChannelProvider
 import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum
 import com.netease.nimlib.sdk.msg.model.IMMessage
 import com.netease.nimlib.sdk.uinfo.UserInfoProvider
 import com.netease.nimlib.sdk.uinfo.model.UserInfo
+import com.netease.nimlib.sdk.v2.utils.DataStructureConverter
 import com.netease.yunxin.kit.alog.ALog
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.catch
@@ -68,11 +70,12 @@ class FLTInitializeService(
             return runBlocking {
                 withTimeoutOrNull(userProviderTimeout) {
                     suspendCancellableCoroutine<Any?> { continuation ->
+                        val v2Message = DataStructureConverter.messageConvertToV2(message)
                         notifyEvent(
                             method = "onMakeNotifyContent",
                             arguments = mapOf(
                                 "nick" to nick,
-                                "message" to message?.toMap()
+                                "message" to v2Message?.toMap()
                             ),
                             callback = MethodChannelSuspendResult(continuation)
                         )
@@ -85,11 +88,12 @@ class FLTInitializeService(
             return runBlocking {
                 withTimeoutOrNull(userProviderTimeout) {
                     suspendCancellableCoroutine<Any?> { continuation ->
+                        val v2Message = DataStructureConverter.messageConvertToV2(message)
                         notifyEvent(
                             method = "onMakeTicker",
                             arguments = mapOf(
                                 "nick" to nick,
-                                "message" to message?.toMap()
+                                "message" to v2Message?.toMap()
                             ),
                             callback = MethodChannelSuspendResult(continuation)
                         )
@@ -102,11 +106,12 @@ class FLTInitializeService(
             return runBlocking {
                 withTimeoutOrNull(userProviderTimeout) {
                     suspendCancellableCoroutine<Any?> { continuation ->
+                        val v2Message = DataStructureConverter.messageConvertToV2(item)
                         notifyEvent(
                             method = "onMakeRevokeMsgTip",
                             arguments = mapOf(
                                 "revokeAccount" to revokeAccount,
-                                "item" to item?.toMap()
+                                "item" to v2Message?.toMap()
                             ),
                             callback = MethodChannelSuspendResult(continuation)
                         )
@@ -115,7 +120,22 @@ class FLTInitializeService(
             }
         }
 
-        override fun makeCategory(message: IMMessage?): String? = null
+        override fun makeCategory(message: IMMessage?): String? {
+            return runBlocking {
+                withTimeoutOrNull(userProviderTimeout) {
+                    suspendCancellableCoroutine<Any?> { continuation ->
+                        val v2Message = DataStructureConverter.messageConvertToV2(message)
+                        notifyEvent(
+                            method = "onMakeCategory",
+                            arguments = mapOf(
+                                "message" to v2Message?.toMap()
+                            ),
+                            callback = MethodChannelSuspendResult(continuation)
+                        )
+                    } as String?
+                }
+            }
+        }
     }
 
     private val innerUserInfoProvider = object : UserInfoProvider {
@@ -200,9 +220,31 @@ class FLTInitializeService(
             return runBlocking {
                 withTimeoutOrNull(userProviderTimeout) {
                     suspendCancellableCoroutine<Any?> { continuation ->
+                        val v2Message = DataStructureConverter.messageConvertToV2(message)
                         notifyEvent(
                             method = "onGetDisplayTitleForMessageNotifier",
-                            arguments = mapOf("message" to message?.toMap()),
+                            arguments = mapOf("message" to v2Message?.toMap()),
+                            callback = MethodChannelSuspendResult(continuation)
+                        )
+                    } as String?
+                }
+            }
+        }
+    }
+
+    private val innerNotificationChannelProvider = object : NotificationChannelProvider {
+        override fun getChannelId(donNotDisturb: Boolean, tooFast: Boolean, ring: Boolean, vibrate: Boolean): String? {
+            return runBlocking {
+                withTimeoutOrNull(userProviderTimeout) {
+                    suspendCancellableCoroutine<Any?> { continuation ->
+                        notifyEvent(
+                            method = "onGetChannelId",
+                            arguments = mapOf(
+                                "donNotDisturb" to donNotDisturb,
+                                "tooFast" to tooFast,
+                                "ring" to ring,
+                                "vibrate" to vibrate
+                            ),
                             callback = MethodChannelSuspendResult(continuation)
                         )
                     } as String?
@@ -248,6 +290,7 @@ class FLTInitializeService(
         if (method == "initialize" && state.value == initial) {
             state.value = initializing
             val enableUserInfoProvider = arguments["enableUserInfoProvider"] as? Boolean? ?: false
+            val enableNotificationChannelProvider = arguments["enableNotificationChannelProvider"] as? Boolean? ?: false
             val enableMessageNotifierCustomization = arguments["enableMessageNotifierCustomization"] as? Boolean? ?: false
             runCatching {
                 NIMClient.initV2(
@@ -258,6 +301,9 @@ class FLTInitializeService(
                         }
                         if (enableMessageNotifierCustomization) {
                             this.messageNotifierCustomization = innerMessageNotifierCustomization
+                        }
+                        if (enableNotificationChannelProvider) {
+                            this.notificationChannelProvider = innerNotificationChannelProvider
                         }
                     }.also {
                         sdkOptions = it

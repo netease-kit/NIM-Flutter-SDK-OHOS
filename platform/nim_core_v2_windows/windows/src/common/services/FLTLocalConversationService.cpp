@@ -152,6 +152,8 @@ void FLTLocalConversationService::onMethodCalled(
     markConversationRead(arguments, result);
   } else if (method == "getStickTopConversationList") {
     getStickTopConversationList(arguments, result);
+  } else if (method == "setCurrentConversation") {
+    setCurrentConversation(arguments, result);
   } else {
     result->NotImplemented();
   }
@@ -726,6 +728,35 @@ void FLTLocalConversationService::getStickTopConversationList(
                       NimResult::getErrorResult(
                           error.code, "getStickTopConversationList failed"));
       });
+}
+
+/// @return void
+void FLTLocalConversationService::setCurrentConversation(
+    const flutter::EncodableMap* arguments,
+    std::shared_ptr<flutter::MethodResult<flutter::EncodableValue>> result) {
+  // 解析conversationId参数（可能为null，因为接口定义是optional）
+  nstd::optional<std::string> conversationId;
+
+  auto iter = arguments->find(flutter::EncodableValue("conversationId"));
+  if (iter != arguments->end() && !iter->second.IsNull()) {
+    conversationId = std::get<std::string>(iter->second);
+  }
+
+  // 获取服务实例并调用接口
+  auto& client = v2::V2NIMClient::get();
+  auto& conversationService = client.getLocalConversationService();
+
+  auto error = conversationService.setCurrentConversation(conversationId);
+
+  // 处理返回结果
+  if (error.has_value()) {
+    // 有错误时返回错误信息
+    result->Error("", error->desc,
+                  NimResult::getErrorResult(error->code, error->desc));
+  } else {
+    // 无错误时返回成功标识
+    result->Success(NimResult::getSuccessResult());
+  }
 }
 
 flutter::EncodableMap convertNIMLocalConversation2Map(

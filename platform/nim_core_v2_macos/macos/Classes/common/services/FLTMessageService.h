@@ -424,6 +424,9 @@ class FLTMessageService : public FLTService {
   void modifyMessage(
       const flutter::EncodableMap* arguments,
       std::shared_ptr<flutter::MethodResult<flutter::EncodableValue>> result);
+  void clearRoamingMessage(
+      const flutter::EncodableMap* arguments,
+      std::shared_ptr<flutter::MethodResult<flutter::EncodableValue>> result);
 
  private:
   v2::V2NIMMessageListener listener;

@@ -888,6 +888,16 @@ class MethodChannelMessageService extends MessageServicePlatform {
         convert: (map) => NIMMessage.fromJson(map));
   }
 
+  /// 仅清空会话漫游消息， 单次传递最多50个会话ID
+  /// [conversationIds] 需要清理的会话ID
+  Future<NIMResult<void>> clearRoamingMessage(
+      {required List<String> conversationIds}) async {
+    return NIMResult<void>.fromMap(await invokeMethod(
+      'clearRoamingMessage',
+      arguments: {'conversationIds': conversationIds},
+    ));
+  }
+
   Future<bool> shouldIgnoreMessage(arguments) async {
     assert(arguments is Map);
     final messageMap = arguments['message'] as Map?;

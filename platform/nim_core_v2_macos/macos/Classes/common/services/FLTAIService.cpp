@@ -148,6 +148,8 @@ flutter::EncodableMap convertNIMAIUser(
 
   resultMap.insert(std::make_pair("modelType", object->modelType));
 
+  resultMap.insert(std::make_pair("aiModelType", object->aiModelType));
+
   flutter::EncodableMap modelConfig = convertAIModelConfig(object->modelConfig);
   resultMap.insert(std::make_pair("modelConfig", modelConfig));
   return resultMap;

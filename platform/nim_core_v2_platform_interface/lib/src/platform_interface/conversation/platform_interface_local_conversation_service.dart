@@ -204,4 +204,11 @@ abstract class LocalConversationServicePlatform extends Service {
     throw UnimplementedError(
         'getStickTopConversationList() is not implemented');
   }
+
+  /// 设置当前聊天账号
+  ///
+  /// @param conversationId 会话id
+  Future<NIMResult<void>> setCurrentConversation(String conversationId) {
+    throw UnimplementedError('setCurrentConversation() is not implemented');
+  }
 }

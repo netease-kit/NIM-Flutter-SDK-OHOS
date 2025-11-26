@@ -13,6 +13,7 @@ NIMLoginOption _$NIMLoginOptionFromJson(Map<String, dynamic> json) =>
       authType:
           $enumDecodeNullable(_$NIMLoginAuthTypeEnumMap, json['authType']),
       forceMode: json['forceMode'] as bool?,
+      offlineMode: json['offlineMode'] as bool?,
       syncLevel:
           $enumDecodeNullable(_$NIMDataSyncLevelEnumMap, json['syncLevel']),
       extensionProvider: json['extensionProvider'] as bool? ?? false,
@@ -24,6 +25,7 @@ Map<String, dynamic> _$NIMLoginOptionToJson(NIMLoginOption instance) =>
       'retryCount': instance.retryCount,
       'timeout': instance.timeout,
       'forceMode': instance.forceMode,
+      'offlineMode': instance.offlineMode,
       'authType': _$NIMLoginAuthTypeEnumMap[instance.authType],
       'syncLevel': _$NIMDataSyncLevelEnumMap[instance.syncLevel],
       'extensionProvider': instance.extensionProvider,

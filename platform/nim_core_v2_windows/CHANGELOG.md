@@ -1,3 +1,9 @@
+## 10.9.3(Sep 3, 2025)
+
+### New Features
+* `FLTMessageService`新增接口`clearRoamingMessage`（android/iOS/macOS/Window）
+* 'FLTLocalConversationService' 新增接口 `setCurrentConversation`（android/iOS/macOS/Window）
+
 ## 10.9.1(Jul 23, 2025)
 
 ### New Features
